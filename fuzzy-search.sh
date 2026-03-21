@@ -2,10 +2,14 @@
 if which fzf >/dev/null; then
   __history_fzf_search() (
     __reload_history
-    # remove entry numbers and timestamps (if any)
-    HISTTIMEFORMAT= history | sed 's/^ *\([0-9]*\)\** *//' |
+    # read directly from history files to show directory annotations
+    cat $(
+      ls $HISTFILE 2>/dev/null
+      ls ${HISTFILE}.* 2>/dev/null | grep "\.[0-9]*$"
+    ) | grep -av '^#[0-9]*$' |
       fzf --height 50% --tiebreak=index --bind=ctrl-r:toggle-sort \
-      --tac --sync --no-multi "--query=$*" ||
+      --tac --sync --no-multi "--query=$*" |
+      sed 's/    # \/.*$//' ||
       # restore typed input if fzf aborted
       echo $*
   )

@@ -8,7 +8,7 @@ shopt -s histappend
 export HISTBACKUP="${HISTFILE}.bak"
 
 # don't save duplicates and commands starting with space
-export HISTCONTROL="ignorespace:ignoredups"
+export HISTCONTROL="ignorespace:erasedups"
 # as well as any one-letter commands and some common commands
 export HISTIGNORE="?:ls:la:ll:fg:hrn"
 
@@ -20,4 +20,5 @@ export PATH="$PATH:$repo_root"
 source $repo_root/backup.sh
 source $repo_root/fuzzy-search.sh
 source $repo_root/synchronization.sh
+source $repo_root/annotation.sh
 source $repo_root/filtering.sh

@@ -8,13 +8,16 @@ changed since then - time to catch up!
 
 - **fast, interactive** search interface using
   [fzf](https://github.com/junegunn/fzf)
+- **directory annotations** — each command is tagged with the working directory
+  where it was run, visible in fzf search
 - **synchronization** across multiple terminals (_entries from current session stay
   on top!_)
-- unlimited history (plus a command to remove duplicates)
+- **automatic deduplication** — duplicate entries (same command + directory) are
+  removed when a session ends
+- unlimited history
 - automatic **backup** and protection against terminal crashes
 
-All of this using less than 100 lines of shell script, without changing history
-file format.
+All of this in a handful of shell scripts, without changing history file format.
 
 
 
@@ -48,9 +51,15 @@ command itself works the same as before.
 To filter your history file, removing trivial commands and keeping only one
 occurrence of each entry, run `filter_bash_history`.
 
+To manually flush the current session's history into the main history file
+(also happens automatically on shell exit), run `flush_current_session_history`.
+
 
 
 ### Gotchas
 
 - History entry numbers change on each reload (by default on each prompt)
-- multiline commands aren't well tested
+- Multiline commands aren't well tested
+- A DEBUG trap is used to capture the working directory for annotations.
+  This may conflict with other tools that set their own DEBUG trap (e.g.
+  `bash-preexec`)
