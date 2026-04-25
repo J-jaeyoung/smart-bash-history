@@ -48,7 +48,9 @@ Usage
 
 Press `Ctrl-R` and start typing to interactively search history (you can
 use arrows). Confirm selection by pressing return. `history`
-command itself works the same as before.
+command itself works the same as before. The fzf query only matches
+against the command portion of each entry — the directory annotation
+shown after `    # ` is displayed but excluded from search.
 
 Inside the fzf prompt, press `Ctrl-O` to cycle the directory filter:
 

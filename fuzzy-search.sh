@@ -56,6 +56,7 @@ if which fzf >/dev/null; then
 
     __sbh_fzf_source "$pid" "" "$cur_dir" |
       fzf --height 50% --tiebreak=index --with-shell="bash -c" \
+          --delimiter='    # ' --nth=1 \
           --bind=ctrl-r:toggle-sort \
           --bind="ctrl-o:execute-silent(__sbh_fzf_cycle '$state')+reload(__sbh_fzf_reload '$state' '$pid' '$cur_dir')+transform-prompt(__sbh_fzf_prompt '$state' '$cur_dir')" \
           --tac --sync --no-multi "--query=$*" |
