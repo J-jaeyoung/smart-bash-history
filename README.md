@@ -10,6 +10,8 @@ changed since then - time to catch up!
   [fzf](https://github.com/junegunn/fzf)
 - **directory annotations** — each command is tagged with the working directory
   where it was run, visible in fzf search
+- **directory filter** in fzf — `Ctrl-O` cycles through *all entries* → *only this
+  directory* → *this directory + subdirectories* → back to all
 - **synchronization** across multiple terminals (_entries from current session stay
   on top!_)
 - **automatic deduplication** — duplicate entries (same command + directory) are
@@ -47,6 +49,14 @@ Usage
 Press `Ctrl-R` and start typing to interactively search history (you can
 use arrows). Confirm selection by pressing return. `history`
 command itself works the same as before.
+
+Inside the fzf prompt, press `Ctrl-O` to cycle the directory filter:
+
+1. *first press* — show only entries whose annotation matches the current
+   directory exactly. Prompt shows `<cur_dir> > `.
+2. *second press* — also include entries from subdirectories. Prompt shows
+   `<cur_dir>/** > `.
+3. *third press* — back to all entries.
 
 To filter your history file, removing trivial commands and keeping only one
 occurrence of each entry, run `filter_bash_history`.
