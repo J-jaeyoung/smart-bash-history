@@ -20,12 +20,12 @@ if which fzf >/dev/null; then
       *) cat ;;
     esac
   }
-  # Ctrl-O cycles: 0 (all) → 1 (exact) → 2 (subdirs) → 0
+  # Ctrl-R cycles: 0 (all) → 2 (subdirs) → 1 (exact) → 0
   __sbh_fzf_cycle() {
     local state="$1" m
     m=$(cat "$state" 2>/dev/null)
-    if   [ -z "$m" ];    then echo 1 > "$state"
-    elif [ "$m" = 1 ];   then echo 2 > "$state"
+    if   [ -z "$m" ];    then echo 2 > "$state"
+    elif [ "$m" = 2 ];   then echo 1 > "$state"
     else rm -f "$state"
     fi
   }
@@ -57,8 +57,7 @@ if which fzf >/dev/null; then
     __sbh_fzf_source "$pid" "" "$cur_dir" |
       fzf --height 50% --tiebreak=index --with-shell="bash -c" \
           --delimiter='    # ' --nth=1 \
-          --bind=ctrl-r:toggle-sort \
-          --bind="ctrl-o:execute-silent(__sbh_fzf_cycle '$state')+reload(__sbh_fzf_reload '$state' '$pid' '$cur_dir')+transform-prompt(__sbh_fzf_prompt '$state' '$cur_dir')" \
+          --bind="ctrl-r:execute-silent(__sbh_fzf_cycle '$state')+reload(__sbh_fzf_reload '$state' '$pid' '$cur_dir')+transform-prompt(__sbh_fzf_prompt '$state' '$cur_dir')" \
           --tac --sync --no-multi "--query=$*" |
       sed 's/    # \/.*$//' ||
       # restore typed input if fzf aborted
