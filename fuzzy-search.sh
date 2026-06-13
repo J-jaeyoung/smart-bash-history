@@ -10,7 +10,8 @@ if which fzf >/dev/null; then
       ls "$HISTFILE" 2>/dev/null
       ls ${HISTFILE}.* 2>/dev/null | grep "\.[0-9]*$" | grep -v "${HISTFILE}\.${pid}\$"
       [ -f "${HISTFILE}.${pid}" ] && echo "${HISTFILE}.${pid}"
-    ) 2>/dev/null | grep -av '^#[0-9]*$' | __sbh_fzf_filter "$mode" "$dir"
+    ) 2>/dev/null | grep -av '^#[0-9]*$' | __sbh_fzf_filter "$mode" "$dir" |
+      tac | LC_ALL=C awk '!seen[$0]++' | tac
   }
   __sbh_fzf_filter() {
     local mode="$1" dir="$2"
