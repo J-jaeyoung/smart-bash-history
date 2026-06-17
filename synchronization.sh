@@ -18,7 +18,7 @@ __reload_history () {
   rm -f "$__tmp_clean"
 }
 if [[ "$PROMPT_COMMAND" != *__reload_history* ]]; then
-  export PROMPT_COMMAND="__reload_history; $PROMPT_COMMAND"
+  export PROMPT_COMMAND="__reload_history${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 fi
 
 # append provided file to main history
